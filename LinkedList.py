@@ -25,13 +25,13 @@ class LinkedList:
 
     """ADDING TO LIST"""
 
-    # add new entry at the end of the list
+    # add @new_entry at the end of the list
     def entry_add(self, new_entry):
         self.last.next = new_entry
         self.last = new_entry
         self.size += 1
 
-    # add new element at @index
+    # add new entry with @data at @index
     def add_at_index(self, index, _data):
         if index == 0:
             self.add_first(_data)
@@ -41,7 +41,7 @@ class LinkedList:
             self.entry_get(index - 1).next = e
             self.size += 1
 
-    # add to the beginning of the list
+    # add new entry at the beginning of the list
     def add_first(self, _data):
         if self.size == 0:
             self.first = self.last = Entry(_data, None, None)
@@ -51,7 +51,7 @@ class LinkedList:
             self.first = e
         self.size += 1
 
-    # add to the end of the list
+    # add new entry with @data to the end of the list
     def add(self, _data):
         if self.size == 0:
             self.first = self.last = Entry(_data, None, None)
@@ -63,7 +63,7 @@ class LinkedList:
 
     """REMOVING FROM LIST"""
 
-    # removes specific entry (private - not supposed to use by user)
+    # removes @entry (not supposed to be used by user)
     def entry_remove(self, entry):
         if self.size == 0:
             raise ValueError('List is empty')
@@ -84,24 +84,24 @@ class LinkedList:
 
     # removes element at @index
     def remove_index(self, index):
-        curIndex = 0
-        curEntry = self.first
-        while curEntry is not None:
-            if curIndex == index:
-                self.entry_remove(curEntry)
-                return curEntry
-            curEntry = curEntry.next
-            curIndex += 1
+        cur_index = 0
+        cur_entry = self.first
+        while cur_entry is not None:
+            if cur_index == index:
+                self.entry_remove(cur_entry)
+                return cur_entry
+            cur_entry = cur_entry.next
+            cur_index += 1
         raise IndexError('Index out of range')
 
     # removes element with @data
     def remove(self, _data):
-        curEntry = self.first
-        while curEntry is not None:
-            if curEntry.data == _data:
-                self.entry_remove(curEntry)
-                return curEntry
-            curEntry = curEntry.next
+        cur_entry = self.first
+        while cur_entry is not None:
+            if cur_entry.data == _data:
+                self.entry_remove(cur_entry)
+                return cur_entry
+            cur_entry = cur_entry.next
         raise ValueError('No such element')
 
     # removes first element of the list
@@ -122,9 +122,9 @@ class LinkedList:
             self.entry_remove(self.last)
             return r
 
-    """GETTING FROM LIST --> using iterator"""
+    """GETTING FROM LIST"""
 
-    # returns (Object)entry @index
+    # returns Entry object at @index (not supposed to be used by user)
     def entry_get(self, index):
         if index < self.size / 2:
             entry = self.first
@@ -141,8 +141,8 @@ class LinkedList:
     # returns first occurrence of element which data == @data (returns -1 if does not exist)
     def get_index(self, _data):
         index = 0
-        for iterData in self:
-            if iterData == _data:
+        for iter_data in self:
+            if iter_data == _data:
                 return index
             index += 1
         return -1
@@ -179,10 +179,10 @@ class LinkedList:
 
     # returns python list made from this list
     def to_list(self):
-        ret_list = []
+        rtrn_list = []
         for iterData in self:
-            ret_list.append(iterData)
-        return ret_list
+            rtrn_list.append(iterData)
+        return rtrn_list
 
     # returns python tuple made from this list
     def to_tuple(self):
@@ -207,17 +207,17 @@ class LinkedList:
         return self.size
 
     def __abs__(self):
-        curEntry = self.first
-        while curEntry is not None:
-            if type(curEntry.data) == int or type(curEntry.data) == float:
-                curEntry.data = abs(curEntry.data)
-            curEntry = curEntry.next
+        cur_entry = self.first
+        while cur_entry is not None:
+            if type(cur_entry.data) == int or type(cur_entry.data) == float:
+                cur_entry.data = abs(cur_entry.data)
+            cur_entry = cur_entry.next
 
     def __add__(self, other):
-        curEntry = other.first
-        while curEntry is not None:
-            self.entry_add(curEntry)
-            curEntry = curEntry.next
+        cur_entry = other.first
+        while cur_entry is not None:
+            self.entry_add(cur_entry)
+            cur_entry = cur_entry.next
 
     # LOGICAL OPERATIONS
     def __bool__(self):
@@ -226,28 +226,28 @@ class LinkedList:
     # Returns new list containing elements that are in both lists
     # example.: [a, b, c] and [a, d, c] = [a, c]
     def __and__(self, other):
-        thisList = self.to_list()
-        returnList = []
+        this_list = self.to_list()
+        rtrn_list = []
         for el in other:
-            if el in thisList:
-                returnList.append(el)
-                thisList.remove(el)
-        return thisList
+            if el in this_list:
+                rtrn_list.append(el)
+                this_list.remove(el)
+        return this_list
 
     # OTHER
     def __str__(self):
         values = ""
-        curEntry = self.first
-        while curEntry is not None:
-            values += "{0}, ".format(curEntry.data)
-            curEntry = curEntry.next
+        cur_entry = self.first
+        while cur_entry is not None:
+            values += "{0}, ".format(cur_entry.data)
+            cur_entry = cur_entry.next
         return "[{0}]".format(values[:-2])
 
     def __iter__(self):
-        curEntry = self.first
-        while curEntry is not None:
-            yield curEntry.data
-            curEntry = curEntry.next
+        cur_entry = self.first
+        while cur_entry is not None:
+            yield cur_entry.data
+            cur_entry = cur_entry.next
 
     def __contains__(self, item):
         return self.contains(item)
