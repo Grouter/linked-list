@@ -7,11 +7,6 @@ class Entry:
         self.next = _next
         self.prev = _prev
 
-    """PYTHON FUNCTIONS"""
-
-    def __str__(self):
-        return "(Object)LinkedList Entry -> value: {0}".format(self.data)
-
 
 class LinkedList:
     def __init__(self, linked_list=None):
@@ -25,13 +20,13 @@ class LinkedList:
 
     """ADDING TO LIST"""
 
-    # add @new_entry at the end of the list
+    # add @new_entry at the end of the list (not supposed to be used by user)
     def entry_add(self, new_entry):
         self.last.next = new_entry
         self.last = new_entry
         self.size += 1
 
-    # add new entry with @data at @index
+    # add new element with @data at @index
     def add_at_index(self, index, _data):
         if index == 0:
             self.add_first(_data)
@@ -41,7 +36,7 @@ class LinkedList:
             self.entry_get(index - 1).next = e
             self.size += 1
 
-    # add new entry at the beginning of the list
+    # add new element at the beginning of the list
     def add_first(self, _data):
         if self.size == 0:
             self.first = self.last = Entry(_data, None, None)
@@ -51,7 +46,7 @@ class LinkedList:
             self.first = e
         self.size += 1
 
-    # add new entry with @data to the end of the list
+    # add new element with @data to the end of the list
     def add(self, _data):
         if self.size == 0:
             self.first = self.last = Entry(_data, None, None)
@@ -199,6 +194,26 @@ class LinkedList:
             if iterData == _data:
                 return True
         return False
+
+    def reverse(self):
+        cur_entry = self.first
+        while cur_entry is not None:
+            cur_entry.next, cur_entry.prev = cur_entry.prev, cur_entry.next
+            cur_entry = cur_entry.prev
+        self.first, self.last = self.last, self.first
+
+    # create 2 lists cut at @index (element at @index will be included in first list)
+    def cut(self, index):
+        list1 = []
+        list2 = []
+        cur_index = 0
+        for el in self:
+            if cur_index <= index:
+                list.append(el)
+            else:
+                list2.append(el)
+            cur_index += 1
+        return list1, list2
 
     """PYTHON FUNCTIONS"""
 
