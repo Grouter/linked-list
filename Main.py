@@ -4,10 +4,6 @@ from tkinter import *
 linkedList = LinkedList()
 
 
-# TODO multiple listbox selection
-# TODO separator (';')
-
-
 def insert():
     value = get_entries()
     linkedList.add(value)
