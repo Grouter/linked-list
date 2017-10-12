@@ -3,8 +3,13 @@ from tkinter import *
 
 linkedList = LinkedList()
 
+Tk().title("LinkedList Demo")
+
 
 def insert():
+    if not check_entries():
+        message(0, "Cannot insert empty input")
+        return
     value = get_entries()
     linkedList.add(value)
     delete_entries()
@@ -13,9 +18,10 @@ def insert():
 
 def find():
     value = get_entries()
+    refresh()
     if linkedList.contains(value):
         message(1, "Found {0}".format(value))
-        index = linkedList.get_index(value)
+        index = linkedList.index_of(value)
         listBox.selection_set(index)
     else:
         message(1, "Not found")
@@ -40,6 +46,9 @@ def remove(indexes):
 
 
 def replace(indexes, value):
+    if not check_entries():
+        message(0, "Cannot replace with empty input")
+        return
     for index in indexes:
         linkedList.set(index, value)
         listBox.insert(index, parse_list(value))
@@ -69,6 +78,13 @@ def parse_list(raw_list):
 def delete_entries():
     for e in entries:
         e.delete(0, END)
+
+
+def check_entries():
+    for e in entries:
+        if e.get() == "":
+            return False
+    return True
 
 
 def get_entries():

@@ -175,8 +175,8 @@ class LinkedList:
     # returns python list made from this list
     def to_list(self):
         rtrn_list = []
-        for iterData in self:
-            rtrn_list.append(iterData)
+        for iter_data in self:
+            rtrn_list.append(iter_data)
         return rtrn_list
 
     # returns python tuple made from this list
@@ -190,8 +190,8 @@ class LinkedList:
 
     # check if element with @data exists
     def contains(self, _data):
-        for iterData in self:
-            if iterData == _data:
+        for iter_data in self:
+            if iter_data == _data:
                 return True
         return False
 
