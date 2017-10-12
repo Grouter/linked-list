@@ -100,7 +100,7 @@ info_text = Label(text="info text", width=40)
 info_text.pack()
 
 listBox = Listbox(width=40, selectmode="multiple")
-listBox.pack(expand=1)
+listBox.pack()
 
 entries = [Entry(), Entry(), Entry()]
 for e in entries:
