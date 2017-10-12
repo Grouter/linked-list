@@ -134,7 +134,7 @@ class LinkedList:
         return entry
 
     # returns first occurrence of element which data == @data (returns -1 if does not exist)
-    def get_index(self, _data):
+    def index_of(self, _data):
         index = 0
         for iter_data in self:
             if iter_data == _data:
@@ -162,7 +162,7 @@ class LinkedList:
 
     # sets elements data at @index to @data
     def set(self, index, _data):
-        self.get(index).data = _data
+        self.entry_get(index).data = _data
 
     # swaps element on @index_a with element at @index_b
     def swap(self, index_a, index_b):
@@ -204,16 +204,15 @@ class LinkedList:
 
     # create 2 lists cut at @index (element at @index will be included in first list)
     def cut(self, index):
-        list1 = []
-        list2 = []
+        rtrn_list = [[],[]]
         cur_index = 0
         for el in self:
             if cur_index <= index:
-                list.append(el)
+                rtrn_list[0].append(el)
             else:
-                list2.append(el)
+                rtrn_list[1].append(el)
             cur_index += 1
-        return list1, list2
+        return rtrn_list
 
     """PYTHON FUNCTIONS"""
 
@@ -238,25 +237,9 @@ class LinkedList:
     def __bool__(self):
         return self.size > 0
 
-    # Returns new list containing elements that are in both lists
-    # example.: [a, b, c] and [a, d, c] = [a, c]
-    def __and__(self, other):
-        this_list = self.to_list()
-        rtrn_list = []
-        for el in other:
-            if el in this_list:
-                rtrn_list.append(el)
-                this_list.remove(el)
-        return this_list
-
     # OTHER
     def __str__(self):
-        values = ""
-        cur_entry = self.first
-        while cur_entry is not None:
-            values += "{0}, ".format(cur_entry.data)
-            cur_entry = cur_entry.next
-        return "[{0}]".format(values[:-2])
+        return ",".join(str(val) for val in self)
 
     def __iter__(self):
         cur_entry = self.first
