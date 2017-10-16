@@ -5,6 +5,8 @@ linkedList = LinkedList()
 
 Tk().title("LinkedList Demo")
 
+active_edit = -1
+
 
 def insert():
     if not check_entries():
@@ -29,7 +31,7 @@ def find():
 
 def refresh():
     for i in range(len(linkedList)):
-        if listBox.get(i) != linkedList.get(i):
+        if listBox.get(i) != parse_list(linkedList.get(i)):
             replace([i], linkedList.get(i))
         if i > listBox.size() - 1:
             listBox.insert(END, parse_list(linkedList.get(i)))
@@ -38,16 +40,13 @@ def refresh():
 
 
 def remove(indexes):
-    print(indexes)
     for index in reversed(indexes):
-        print(index)
         linkedList.remove_index(index)
         listBox.delete(index)
 
 
 def replace(indexes, value):
     if not check_entries():
-        message(0, "Cannot replace with empty input")
         return
     for index in indexes:
         linkedList.set(index, value)
@@ -57,9 +56,11 @@ def replace(indexes, value):
 
 
 def edit():
+    global active_edit
     if len(listBox.curselection()) > 1:
         message(0, "Cannot edit multiple inputs")
         return
+    active_edit = listBox.curselection()[0]
     edited_val = linkedList.get(listBox.curselection()[0])
     delete_entries()
     for i in range(len(entries)):
@@ -67,8 +68,14 @@ def edit():
 
 
 def apply_edit():
-    linkedList.set(listBox.curselection()[0], get_entries())
-    refresh()
+    global active_edit
+    print(active_edit)
+    if active_edit >= 0:
+        linkedList.set(active_edit, get_entries())
+        refresh()
+    else:
+        message(0, "Use Edit before Apply Edit")
+    active_edit = -1
 
 
 def parse_list(raw_list):
@@ -112,6 +119,5 @@ Button(text="Insert", command=insert).pack(side=LEFT)
 Button(text="Find", command=find).pack(side=LEFT)
 Button(text="Refresh", command=refresh).pack(side=LEFT)
 Button(text="Remove", command=lambda: remove(listBox.curselection())).pack(side=LEFT)
-Button(text="Replace", command=lambda: replace(listBox.curselection(), get_entries())).pack(side=LEFT)
 
 mainloop()

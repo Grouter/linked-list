@@ -26,8 +26,8 @@ class LinkedList:
         self.last = new_entry
         self.size += 1
 
-    # add new element with @data at @index
     def add_at_index(self, index, _data):
+        """Add new element with @data at @index"""
         if index == 0:
             self.add_first(_data)
         else:
@@ -36,8 +36,8 @@ class LinkedList:
             self.entry_get(index - 1).next = e
             self.size += 1
 
-    # add new element at the beginning of the list
     def add_first(self, _data):
+        """Add new element at the beginning of the list"""
         if self.size == 0:
             self.first = self.last = Entry(_data, None, None)
         else:
@@ -46,8 +46,8 @@ class LinkedList:
             self.first = e
         self.size += 1
 
-    # add new element with @data to the end of the list
     def add(self, _data):
+        """Add new element with @data to the end of the list"""
         if self.size == 0:
             self.first = self.last = Entry(_data, None, None)
         else:
@@ -58,8 +58,8 @@ class LinkedList:
 
     """REMOVING FROM LIST"""
 
-    # removes @entry (not supposed to be used by user)
     def entry_remove(self, entry):
+        """Removes @entry (not supposed to be used by user)"""
         if self.size == 0:
             raise ValueError('List is empty')
         if entry == self.first:
@@ -77,8 +77,8 @@ class LinkedList:
             entry.prev.next = entry.next
         self.size -= 1
 
-    # removes element at @index
     def remove_index(self, index):
+        """Removes element at @index"""
         cur_index = 0
         cur_entry = self.first
         while cur_entry is not None:
@@ -89,8 +89,8 @@ class LinkedList:
             cur_index += 1
         raise IndexError('Index out of range')
 
-    # removes element with @data
     def remove(self, _data):
+        """Removes element with @data"""
         cur_entry = self.first
         while cur_entry is not None:
             if cur_entry.data == _data:
@@ -99,8 +99,8 @@ class LinkedList:
             cur_entry = cur_entry.next
         raise ValueError('No such element')
 
-    # removes first element of the list
     def remove_first(self):
+        """Removes first element of the list"""
         if self.size == 0:
             raise ValueError("No such element")
         else:
@@ -108,8 +108,8 @@ class LinkedList:
             self.entry_remove(self.first)
             return r
 
-    # removes last element
     def remove_last(self):
+        """Removes last element"""
         if self.size == 0:
             raise ValueError("No such element")
         else:
@@ -119,8 +119,8 @@ class LinkedList:
 
     """GETTING FROM LIST"""
 
-    # returns Entry object at @index (not supposed to be used by user)
     def entry_get(self, index):
+        """returns Entry object at @index (not supposed to be used by user)"""
         if index < self.size / 2:
             entry = self.first
             while index > 0:
@@ -133,8 +133,8 @@ class LinkedList:
                 index += 1
         return entry
 
-    # returns first occurrence of element which data == @data (returns -1 if does not exist)
     def index_of(self, _data):
+        """Returns first occurrence of element which data == @data (returns -1 if does not exist)"""
         index = 0
         for iter_data in self:
             if iter_data == _data:
@@ -142,68 +142,69 @@ class LinkedList:
             index += 1
         return -1
 
-    # returns element at @index
     def get(self, index):
+        """Returns element at @index"""
         return self.entry_get(index).data
 
-    # returns first element
     def get_first(self):
+        """Returns first element"""
         if self.size == 0:
             raise ValueError('No such element')
         return self.first.data
 
-    # returns last element
     def get_last(self):
+        """Returns last element"""
         if self.size == 0:
             raise ValueError('No such element')
         return self.last.data
 
     """OTHER METHODS"""
 
-    # sets elements data at @index to @data
     def set(self, index, _data):
+        """Sets elements data at @index to @data"""
         self.entry_get(index).data = _data
 
-    # swaps element on @index_a with element at @index_b
     def swap(self, index_a, index_b):
+        """Swaps element on @index_a with element at @index_b"""
         if 0 < index_a < self.size - 1 and 0 < index_b < self.size - 1:
             self.get(index_a).next, self.get(index_b).next = self.get(index_b).next, self.get(index_a).next
             self.get(index_a).prev, self.get(index_b).prev = self.get(index_b).prev, self.get(index_a).prev
         else:
             raise IndexError('No such index')
 
-    # returns python list made from this list
     def to_list(self):
+        """Returns python list made from this list"""
         rtrn_list = []
         for iter_data in self:
             rtrn_list.append(iter_data)
         return rtrn_list
 
-    # returns python tuple made from this list
     def to_tuple(self):
+        """Returns python tuple made from this list"""
         return tuple(self.to_list())
 
-    # removes all elements from list
     def clear(self):
+        """Removes all elements from list"""
         self.first = self.last = None
         self.size = 0
 
-    # check if element with @data exists
     def contains(self, _data):
+        """Check if element with @data exists"""
         for iter_data in self:
             if iter_data == _data:
                 return True
         return False
 
     def reverse(self):
+        """Reverse list"""
         cur_entry = self.first
         while cur_entry is not None:
             cur_entry.next, cur_entry.prev = cur_entry.prev, cur_entry.next
             cur_entry = cur_entry.prev
         self.first, self.last = self.last, self.first
 
-    # create 2 lists cut at @index (element at @index will be included in first list)
     def cut(self, index):
+        """Create 2 lists cut at @index (element at @index will be included in first list)"""
         rtrn_list = [[],[]]
         cur_index = 0
         for el in self:
@@ -232,6 +233,7 @@ class LinkedList:
         while cur_entry is not None:
             self.entry_add(cur_entry)
             cur_entry = cur_entry.next
+        return self
 
     # LOGICAL OPERATIONS
     def __bool__(self):
@@ -252,3 +254,11 @@ class LinkedList:
 
     def __copy__(self):
         return LinkedList(self)
+
+    def __del__(self):
+        self.clear()
+
+    def __reversed__(self):
+        rtrn_list = self.__copy__()
+        rtrn_list.reverse()
+        return rtrn_list
