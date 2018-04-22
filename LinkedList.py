@@ -1,6 +1,3 @@
-from Entry import *
-
-
 class LinkedList:
     def __init__(self):
         self.first = None
@@ -105,3 +102,18 @@ class LinkedList:
             values += "%s, " % str(curList.data)
             curList = curList.next
         return "[%s]" % values[:-2]
+
+
+class Entry:
+    def __init__(self, data, next_, prev):
+        self.data = data
+        self.next = next_
+        self.prev = prev
+
+    """PYTHON FUNCTIONS"""
+
+    def __repr__(self):
+        return self.__str__()
+
+    def __str__(self):
+        return "(Object)LinkedList Entry -> value: %s" % self.data
